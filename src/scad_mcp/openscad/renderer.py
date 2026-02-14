@@ -118,6 +118,7 @@ async def render_scad(
         f"--imgsize={img_width},{img_height}",
         f"--projection={request.projection}",
         f"--camera={camera}",
+        "--backend=Manifold",
         "--autocenter",
         "--viewall",
     ]

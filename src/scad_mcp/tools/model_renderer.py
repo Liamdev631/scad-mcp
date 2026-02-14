@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import asyncio
 from pathlib import Path
 
 from scad_mcp.config.models import AppConfig
@@ -10,9 +11,10 @@ from scad_mcp.models import RenderRequest
 from scad_mcp.openscad.installer import find_openscad_executable
 from scad_mcp.openscad.renderer import render_scad
 
-
 LOGGER = logging.getLogger("scad_mcp.tools.model_renderer")
 
+# Global lock to ensure only one OpenSCAD instance runs at a time
+RENDER_LOCK = asyncio.Lock()
 
 async def render_model(
     config: AppConfig,
@@ -58,13 +60,14 @@ async def render_model(
         LOGGER.error("OpenSCAD executable not found for render.")
         raise RuntimeError("OpenSCAD executable not found.")
     try:
-        result = await render_scad(
-            request=request,
-            openscad_path=resolved_path,
-            img_width=img_width if img_width is not None else render_cfg.img_width,
-            img_height=img_height if img_height is not None else render_cfg.img_height,
-            colorscheme=config.openscad.colorscheme,
-        )
+        async with RENDER_LOCK:
+            result = await render_scad(
+                request=request,
+                openscad_path=resolved_path,
+                img_width=img_width if img_width is not None else render_cfg.img_width,
+                img_height=img_height if img_height is not None else render_cfg.img_height,
+                colorscheme=config.openscad.colorscheme,
+            )
     except Exception:
         LOGGER.exception("Render failed for %s", scad_file)
         raise

@@ -47,6 +47,9 @@ async def scad_model_renderer(
 ) -> dict[str, str | list[str]]:
     """Render a SCAD file to an image.
 
+    WARNING: OpenSCAD rendering is single-threaded and CPU-bound. This process may take a significant amount of time (minutes) to complete for complex models.
+    Requests are processed sequentially. DO NOT assume the request has timed out; wait for the result.
+
     Args:
         scad_file: Path to the .scad file.
         projection: Perspective or orthographic projection.
