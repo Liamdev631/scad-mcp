@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "scad-mcp": {
+      "command": "uv",
+      "args": [
+        "run",
+        "scad-mcp"
+      ]
+    }
+  }
+}
