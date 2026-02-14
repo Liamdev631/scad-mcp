@@ -10,8 +10,29 @@ Python MCP server for OpenSCAD design and rendering utilities.
 
 ## Run the MCP server
 
+
+To specify the OpenSCAD executable path, pass it as a command-line argument when running the server:
+ 
 ```bash
-uv run scad-mcp
+uv run scad-mcp --openscad-path "C:\Program Files\OpenSCAD\openscad.exe"
+```
+
+For MCP configuration (e.g., in `.trae/mcp.json`):
+ 
+```json
+{
+  "mcpServers": {
+    "scad-mcp": {
+      "command": "uv",
+      "args": [
+        "run",
+        "scad-mcp",
+        "--openscad-path",
+        "C:\\Program Files\\OpenSCAD\\openscad.exe"
+      ]
+    }
+  }
+}
 ```
 
 ## Tools
@@ -64,32 +85,6 @@ Example usage:
 This command renders the ferris wheel model from a viewpoint that is the average of the front, left, and top camera angles. This is useful for getting an isometric-like perspective that shows depth and detail from multiple sides.
 
 ![Ferris wheel top-front-right](examples/ferris_wheel_perspective_fov45_top-front-right.png)
-
-## Configuration
- 
-To specify the OpenSCAD executable path, pass it as a command-line argument when running the server:
- 
-```bash
-uv run scad-mcp --openscad-path "C:\Program Files\OpenSCAD\openscad.exe"
-```
-
-For MCP configuration (e.g., in `.trae/mcp.json`):
- 
-```json
-{
-  "mcpServers": {
-    "scad-mcp": {
-      "command": "uv",
-      "args": [
-        "run",
-        "scad-mcp",
-        "--openscad-path",
-        "C:\\Program Files\\OpenSCAD\\openscad.exe"
-      ]
-    }
-  }
-}
-```
 
 ## Testing
 
