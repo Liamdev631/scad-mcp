@@ -1,4 +1,5 @@
 # scad-mcp
+![CI](https://github.com/liamb/scad-mcp/actions/workflows/ci.yml/badge.svg)
 
 Python MCP server for OpenSCAD design and rendering utilities.
 
@@ -66,7 +67,7 @@ The renderer names output files using:
 
 Example usage:
 
-'''json
+```json
 {
   "angles": [
     "top",
@@ -80,7 +81,7 @@ Example usage:
   "img_width": 1920,
   "output_dir": "\**\scad-mcp\examples"
 }
-'''
+```
 
 This command renders the ferris wheel model from a viewpoint that is the average of the front, left, and top camera angles. This is useful for getting an isometric-like perspective that shows depth and detail from multiple sides.
 
