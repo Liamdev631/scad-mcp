@@ -1,6 +1,6 @@
 # scad-mcp
 
-Python MCP server for OpenSCAD rendering and model utilities.
+Python MCP server for OpenSCAD design and rendering utilities.
 
 ## Requirements
 
@@ -8,39 +8,9 @@ Python MCP server for OpenSCAD rendering and model utilities.
 - OpenSCAD installed and available in PATH or configured via --openscad-path argument
 - uv for dependency management
 
-## Setup
-
-Activate the local conda environment:
-
-```bash
-conda activate C:\Users\liamb\Projects\scad-mcp\.conda
-uv sync
-```
-
-On Linux:
-
-```bash
-conda activate /path/to/scad-mcp/.conda
-uv sync
-```
-
 ## Run the MCP server
 
 ```bash
-uv run scad-mcp
-```
-
-Set the environment to use production config:
-
-```bash
-$env:SCAD_MCP_ENV="prod"
-uv run scad-mcp
-```
-
-On Linux:
-
-```bash
-export SCAD_MCP_ENV=prod
 uv run scad-mcp
 ```
 
@@ -75,26 +45,34 @@ The renderer names output files using:
 
 Example usage:
 
-```bash
-mcp-call scad_model_renderer --scad-file examples/ferris_wheel.scad --angles front left top --output-dir examples
-```
+'''json
+{
+  "angles": [
+    "top",
+    "front",
+    "right"
+  ],
+  "scad_file": "\**\scad-mcp\examples\ferris_wheel.scad",
+  "projection": "perspective",
+  "fov": 45,
+  "img_height": 1080,
+  "img_width": 1920,
+  "output_dir": "\**\scad-mcp\examples"
+}
+'''
 
 This command renders the ferris wheel model from a viewpoint that is the average of the front, left, and top camera angles. This is useful for getting an isometric-like perspective that shows depth and detail from multiple sides.
 
-| Render | Command |
-| --- | --- |
-| ![Ferris wheel top-front-right](examples/ferris_wheel_perspective_fov45_top-front-right.png) | `mcp-call scad_model_renderer --scad-file examples/ferris_wheel.scad --angles top front right --output-dir examples` |
+![Ferris wheel top-front-right](examples/ferris_wheel_perspective_fov45_top-front-right.png)
 
 ## Configuration
- 
-Config files live in config/dev.toml and config/prod.toml.
  
 To specify the OpenSCAD executable path, pass it as a command-line argument when running the server:
  
 ```bash
 uv run scad-mcp --openscad-path "C:\Program Files\OpenSCAD\openscad.exe"
 ```
- 
+
 For MCP configuration (e.g., in `.trae/mcp.json`):
  
 ```json

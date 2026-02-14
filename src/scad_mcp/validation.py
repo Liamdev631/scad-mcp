@@ -55,8 +55,6 @@ def validate_fov(fov: float) -> None:
     if not 1.0 <= fov <= 120.0:
         raise ValueError("FOV must be between 1 and 120 degrees.")
 
-
-
 def validate_angles(angles: Iterable[str]) -> list[str]:
     """Validate view angles and return normalized list.
 
