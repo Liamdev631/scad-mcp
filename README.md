@@ -130,3 +130,8 @@ Always use the OpenSCAD language reference manual at https://en.wikibooks.org/wi
 
 WARNING: OpenSCAD rendering is single-threaded and CPU-bound. This process may take a significant amount of time (minutes) to complete for complex models. Requests are processed sequentially to prevent resource exhaustion. NEVER assume the request has timed out; ALWAYS wait for the result. DO NOT retry the command if it seems slow.
 ```
+
+## ToDo:
+
+* Add multi-color support for 3D printing
+* Add support for other 3D file formats (e.g., OBJ, STL)
