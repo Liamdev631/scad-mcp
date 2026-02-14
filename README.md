@@ -1,5 +1,5 @@
 # scad-mcp
-![CI](https://github.com/liamb/scad-mcp/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/liamdev631/scad-mcp/actions/workflows/ci.yml/badge.svg)
 
 Python MCP server for OpenSCAD design and rendering utilities.
 
