@@ -77,6 +77,37 @@ async def scad_model_renderer(
         raise
 
 
+@mcp.tool()
+async def scad_model_converter(
+    scad_file: str,
+    output_format: str | None = None,
+    output_path: str | None = None,
+) -> dict[str, str | list[str]]:
+    """Convert a SCAD file to another format (e.g., STL, 3MF, AMF).
+
+    WARNING: OpenSCAD export can be slow for complex models.
+    Requests are processed sequentially.
+
+    Args:
+        scad_file: Path to the .scad file.
+        output_format: Target format (e.g. "stl", "3mf", "amf"). Optional if output_path is provided.
+        output_path: Optional explicit output path. If provided, output_format is ignored.
+
+    Returns:
+        Dict containing output path and command used.
+    """
+    try:
+        return await convert_model(
+            config=app_config,
+            scad_file=scad_file,
+            output_format=output_format,
+            output_path=output_path,
+        )
+    except Exception:
+        LOGGER.exception("Convert tool failed for %s", scad_file)
+        raise
+
+
 def main() -> None:
     """Run the MCP server."""
     import argparse

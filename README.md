@@ -87,6 +87,19 @@ This command renders the ferris wheel model from a viewpoint that is the average
 
 ![Ferris wheel top-front-right](examples/ferris_wheel_perspective_fov45_top-front-right.png)
 
+### SCAD model converter
+
+Inputs:
+
+- scad_file: path to .scad file
+- output_format: target format (e.g. "stl", "3mf", "amf"). Optional if output_path is provided.
+- output_path: explicit output path. If provided, output_format is ignored.
+
+Outputs:
+
+- output_path: path to the generated file
+- command: command used to generate the file
+
 ## Testing
 
 ```bash

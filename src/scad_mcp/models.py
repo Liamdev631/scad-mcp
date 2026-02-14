@@ -31,3 +31,17 @@ class RenderResult:
     """Result of a render operation."""
     image_path: Path
     command: list[str]
+
+
+@dataclass(frozen=True)
+class ConvertRequest:
+    """Input parameters for a convert request."""
+    scad_file: Path
+    output_file: Path
+
+
+@dataclass(frozen=True)
+class ConvertResult:
+    """Result of a convert operation."""
+    output_path: Path
+    command: list[str]
