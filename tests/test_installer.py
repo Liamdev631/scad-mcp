@@ -38,9 +38,9 @@ async def test_get_openscad_info_found(tmp_path: Path, monkeypatch: pytest.Monke
     assert info.version == "OpenSCAD 2024.01"
 
 
-def test_load_config_uses_env(tmp_path: Path) -> None:
-    """Confirm OPENSCAD_PATH from env var is loaded into config."""
-    with patch.dict(os.environ, {"OPENSCAD_PATH": r"C:\OpenSCAD\openscad.exe"}):
-        config = load_config()
-        assert config.openscad.path is not None
-        assert str(config.openscad.path).endswith("openscad.exe") 
+def test_load_config_uses_args(tmp_path: Path) -> None:
+    """Confirm openscad_path from args is loaded into config."""
+    custom_path = r"C:\OpenSCAD\openscad.exe"
+    config = load_config(openscad_path=custom_path)
+    assert config.openscad.path is not None
+    assert str(config.openscad.path) == custom_path 

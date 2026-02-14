@@ -82,7 +82,6 @@ async def render_scad(
     openscad_path: Path,
     img_width: int,
     img_height: int,
-    colorscheme: str,
 ) -> RenderResult:
     """Render a SCAD file to an image using OpenSCAD.
 
@@ -91,7 +90,6 @@ async def render_scad(
         openscad_path: Path to the OpenSCAD executable.
         img_width: Output image width in pixels.
         img_height: Output image height in pixels.
-        colorscheme: OpenSCAD colorscheme name.
 
     Returns:
         RenderResult with image path and executed command.
@@ -118,12 +116,9 @@ async def render_scad(
         f"--imgsize={img_width},{img_height}",
         f"--projection={request.projection}",
         f"--camera={camera}",
-        "--backend=Manifold",
         "--autocenter",
         "--viewall",
     ]
-    if colorscheme:
-        command.append(f"--colorscheme={colorscheme}")
     LOGGER.info("Rendering %s to %s", request.scad_file, output_path)
     exit_code, stdout, stderr = await run_openscad(command)
     if exit_code != 0:

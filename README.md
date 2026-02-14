@@ -5,7 +5,7 @@ Python MCP server for OpenSCAD rendering and model utilities.
 ## Requirements
 
 - Python 3.12
-- OpenSCAD installed and available in PATH or configured via OPENSCAD_PATH
+- OpenSCAD installed and available in PATH or configured via --openscad-path argument
 - uv for dependency management
 
 ## Setup
@@ -64,23 +64,53 @@ Inputs:
 - scad_file: path to .scad file
 - projection: perspective or orthographic
 - fov: 1 to 120
-- angles: one or two of top, bottom, front, back, left, right
+- angles: one, two, or three of top, bottom, front, back, left, right
 - output_dir: optional output folder
 
 The renderer names output files using:
 
 ```
-<stem>_<projection>_fov<FOV>_<angle1[-angle2]>.png
+<stem>_<projection>_fov<FOV>_<angle1[-angle2][-angle3]>.png
 ```
+
+Example usage:
+
+```bash
+mcp-call scad_model_renderer --scad-file examples/ferris_wheel.scad --angles front left top --output-dir examples
+```
+
+This command renders the ferris wheel model from a viewpoint that is the average of the front, left, and top camera angles. This is useful for getting an isometric-like perspective that shows depth and detail from multiple sides.
+
+| Render | Command |
+| --- | --- |
+| ![Ferris wheel top-front-right](examples/ferris_wheel_perspective_fov45_top-front-right.png) | `mcp-call scad_model_renderer --scad-file examples/ferris_wheel.scad --angles top front right --output-dir examples` |
 
 ## Configuration
-
-Config files live in config/dev.toml and config/prod.toml. Use OPENSCAD_PATH in .env to specify the OpenSCAD executable when it is not in PATH.
-
-Example .env entry on Windows:
-
+ 
+Config files live in config/dev.toml and config/prod.toml.
+ 
+To specify the OpenSCAD executable path, pass it as a command-line argument when running the server:
+ 
+```bash
+uv run scad-mcp --openscad-path "C:\Program Files\OpenSCAD\openscad.exe"
 ```
-OPENSCAD_PATH="C:\Program Files\OpenSCAD\openscad.exe"
+ 
+For MCP configuration (e.g., in `.trae/mcp.json`):
+ 
+```json
+{
+  "mcpServers": {
+    "scad-mcp": {
+      "command": "uv",
+      "args": [
+        "run",
+        "scad-mcp",
+        "--openscad-path",
+        "C:\\Program Files\\OpenSCAD\\openscad.exe"
+      ]
+    }
+  }
+}
 ```
 
 ## Testing

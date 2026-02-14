@@ -30,6 +30,5 @@ async def test_openscad_render_integration(tmp_path: Path) -> None:
         openscad_path=openscad,
         img_width=400,
         img_height=300,
-        colorscheme="",
     )
     assert result.image_path.exists()

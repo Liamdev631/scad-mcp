@@ -25,7 +25,6 @@ async def render_model(
     output_dir: str | None,
     img_width: int | None = None,
     img_height: int | None = None,
-    openscad_path: str | None = None,
 ) -> dict[str, str | list[str]]:
     """Render a SCAD file and return output metadata.
 
@@ -38,7 +37,6 @@ async def render_model(
         output_dir: Optional output directory for renders.
         img_width: Output image width in pixels.
         img_height: Output image height in pixels.
-        openscad_path: Optional path to OpenSCAD executable.
 
     Returns:
         Dict with rendered image path and command used.
@@ -53,7 +51,7 @@ async def render_model(
         output_dir=Path(output_dir) if output_dir else render_cfg.output_dir,
     )
     
-    executable_path = Path(openscad_path) if openscad_path else config.openscad.path
+    executable_path = config.openscad.path
     resolved_path = find_openscad_executable(executable_path)
     
     if not resolved_path:
@@ -66,7 +64,6 @@ async def render_model(
                 openscad_path=resolved_path,
                 img_width=img_width if img_width is not None else render_cfg.img_width,
                 img_height=img_height if img_height is not None else render_cfg.img_height,
-                colorscheme=config.openscad.colorscheme,
             )
     except Exception:
         LOGGER.exception("Render failed for %s", scad_file)

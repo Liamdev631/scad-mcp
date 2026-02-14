@@ -43,7 +43,6 @@ async def scad_model_renderer(
     output_dir: str | None = None,
     img_width: int = 1920,
     img_height: int = 1080,
-    openscad_path: str | None = None,
 ) -> dict[str, str | list[str]]:
     """Render a SCAD file to an image.
 
@@ -54,11 +53,10 @@ async def scad_model_renderer(
         scad_file: Path to the .scad file.
         projection: Perspective or orthographic projection.
         fov: Field of view in degrees (ignored if projection is orthographic).
-        angles: One or two view angles. Final angle is the mean of the two. Choices are "front", "back", "left", "right", "top", "bottom".
+        angles: One, two, or three view angles. Final angle is the mean of the provided angles. Choices are "front", "back", "left", "right", "top", "bottom".
         output_dir: Optional output directory for renders.
         img_width: Output image width in pixels.
         img_height: Output image height in pixels.
-        openscad_path: Optional path to OpenSCAD executable.
 
     Returns:
         Dict containing image path and command used.
@@ -73,7 +71,6 @@ async def scad_model_renderer(
             output_dir=output_dir,
             img_width=img_width,
             img_height=img_height,
-            openscad_path=openscad_path,
         )
     except Exception:
         LOGGER.exception("Render tool failed for %s", scad_file)
@@ -82,6 +79,16 @@ async def scad_model_renderer(
 
 def main() -> None:
     """Run the MCP server."""
+    import argparse
+    parser = argparse.ArgumentParser(description="OpenSCAD MCP Server")
+    parser.add_argument("--openscad-path", help="Path to OpenSCAD executable")
+    args = parser.parse_args()
+
+    global app_config
+    if args.openscad_path:
+        app_config = load_config(openscad_path=args.openscad_path)
+        configure_logging(app_config.logging.level)
+
     mcp.run()
 
 

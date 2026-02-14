@@ -36,7 +36,6 @@ async def test_render_scad_happy_path(tmp_path: Path, monkeypatch: pytest.Monkey
         openscad_path=Path("openscad"),
         img_width=800,
         img_height=600,
-        colorscheme="",
     )
     assert result.image_path.exists()
 
@@ -58,7 +57,7 @@ async def test_render_model_tool(tmp_path: Path, monkeypatch: pytest.MonkeyPatch
     config = AppConfig(
         server=ServerConfig(name="scad-mcp"),
         logging=LoggingConfig(level="INFO"),
-        openscad=OpenScadConfig(path=Path("openscad"), colorscheme=""),
+        openscad=OpenScadConfig(path=Path("openscad")),
         render=RenderConfig(
             img_width=300,
             img_height=200,

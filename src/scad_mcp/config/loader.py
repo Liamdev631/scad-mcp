@@ -8,22 +8,17 @@ import os
 from scad_mcp.config.models import AppConfig, OpenScadConfig
 
 
-def load_config() -> AppConfig:
-    """Load application configuration from environment variables.
+def load_config(openscad_path: str | None = None) -> AppConfig:
+    """Load application configuration.
+
+    Args:
+        openscad_path: Optional path to OpenSCAD executable from CLI args.
 
     Returns:
         Parsed application configuration.
     """
-    env_data = dict(os.environ)
-
-    openscad_path = env_data.get("OPENSCAD_PATH", "")
-    
-    # We can override other defaults here if needed using env_data
-    # For now, we rely on the dataclass defaults for most settings
-    
     openscad_cfg = OpenScadConfig(
         path=Path(openscad_path) if openscad_path else None,
-        # Default colorscheme is "Tomorrow Night" from models.py
     )
     
     return AppConfig(openscad=openscad_cfg)

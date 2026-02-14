@@ -16,7 +16,6 @@ class LoggingConfig:
 class OpenScadConfig:
     """OpenSCAD configuration."""
     path: Path | None = None
-    colorscheme: str = "Tomorrow Night"
 
 
 @dataclass(frozen=True)

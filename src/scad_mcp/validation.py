@@ -72,12 +72,14 @@ def validate_angles(angles: Iterable[str]) -> list[str]:
     normalized = [angle.lower() for angle in angles]
     if not normalized:
         raise ValueError("At least one angle must be provided.")
-    if len(normalized) > 2:
-        raise ValueError("Provide at most two angles.")
+    if len(normalized) > 3:
+        raise ValueError("Provide at most three angles.")
     if any(angle not in VALID_ANGLES for angle in normalized):
         raise ValueError("Angles must be one of top, bottom, front, back, left, right.")
     if len(set(normalized)) != len(normalized):
         raise ValueError("Duplicate angles are not allowed.")
-    if len(normalized) == 2 and sorted(normalized) in [sorted(pair) for pair in OPPOSITES]:
-        raise ValueError("Opposite angles cannot be combined.")
+    if len(normalized) >= 2:
+        for pair in OPPOSITES:
+            if set(pair).issubset(set(normalized)):
+                raise ValueError(f"Opposite angles {pair} cannot be combined.")
     return normalized
